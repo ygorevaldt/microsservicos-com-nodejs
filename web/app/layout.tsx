@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { UserProvider } from "@auth0/nextjs-auth0/client";
 
 import "./globals.css";
 
@@ -14,7 +15,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR">
-      <body className={`antialiased`}>{children}</body>
+      <UserProvider>
+        <body className={`antialiased`}>{children}</body>
+      </UserProvider>
     </html>
   );
 }

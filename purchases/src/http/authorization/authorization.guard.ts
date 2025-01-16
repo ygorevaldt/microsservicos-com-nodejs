@@ -1,7 +1,6 @@
 import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from "@nestjs/common";
 import { auth } from "express-oauth2-jwt-bearer";
 import { ConfigService } from "@nestjs/config";
-import { Request, Response } from "express";
 import { GqlExecutionContext } from "@nestjs/graphql";
 
 @Injectable()

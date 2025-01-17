@@ -1,7 +1,7 @@
 import { join } from "node:path";
 
-import { Module } from "@nestjs/common";
-import { ConfigModule } from "@nestjs/config";
+import { MiddlewareConsumer, Module } from "@nestjs/common";
+import { ConfigModule, ConfigService } from "@nestjs/config";
 import { GraphQLModule } from "@nestjs/graphql";
 import { ApolloDriver, ApolloDriverConfig } from "@nestjs/apollo";
 
@@ -11,6 +11,8 @@ import { DatabaseModule } from "src/database/database.module";
 import { ProductService } from "src/services/product.service";
 import { PurchaseResolver } from "./graphql/resolvers/purchase.resolver";
 import { PurchaseService } from "src/services/purchase.service";
+import { auth } from "express-oauth2-jwt-bearer";
+import { CustumerService } from "src/services/custumer.service";
 
 @Module({
   imports: [
@@ -21,6 +23,13 @@ import { PurchaseService } from "src/services/purchase.service";
     }),
     DatabaseModule,
   ],
-  providers: [PrismaService, ProductService, PurchaseService, ProductResolver, PurchaseResolver],
+  providers: [
+    PrismaService,
+    ProductService,
+    PurchaseService,
+    CustumerService,
+    ProductResolver,
+    PurchaseResolver,
+  ],
 })
 export class HttpModule {}

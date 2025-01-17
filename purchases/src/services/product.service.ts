@@ -7,8 +7,8 @@ import slugify from "slugify";
 export class ProductService {
   constructor(private readonly prismaService: PrismaService) {}
 
-  async create(createProductDto: CreateProductDto) {
-    const { title } = createProductDto;
+  async create(dto: CreateProductDto) {
+    const { title } = dto;
     const slug = slugify(title, { lower: true });
 
     const productWithSameSlug = await this.prismaService.product.findUnique({

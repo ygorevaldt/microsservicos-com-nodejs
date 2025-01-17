@@ -7,11 +7,6 @@ import slugify from "slugify";
 export class ProductService {
   constructor(private readonly prismaService: PrismaService) {}
 
-  async findMany() {
-    const product = await this.prismaService.product.findMany();
-    return product;
-  }
-
   async create(createProductDto: CreateProductDto) {
     const { title } = createProductDto;
     const slug = slugify(title, { lower: true });
@@ -29,6 +24,18 @@ export class ProductService {
         title,
         slug,
       },
+    });
+    return product;
+  }
+
+  async findMany() {
+    const products = await this.prismaService.product.findMany();
+    return products;
+  }
+
+  async findUnique(id: string) {
+    const product = await this.prismaService.product.findUnique({
+      where: { id },
     });
     return product;
   }

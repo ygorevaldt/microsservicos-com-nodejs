@@ -9,6 +9,8 @@ import { ProductResolver } from "./graphql/resolvers/product.resolver";
 import { PrismaService } from "src/database/prisma/prisma.service";
 import { DatabaseModule } from "src/database/database.module";
 import { ProductService } from "src/services/product.service";
+import { PurchaseResolver } from "./graphql/resolvers/purchase.resolver";
+import { PurchaseService } from "src/services/purchase.service";
 
 @Module({
   imports: [
@@ -19,6 +21,6 @@ import { ProductService } from "src/services/product.service";
     }),
     DatabaseModule,
   ],
-  providers: [PrismaService, ProductResolver, ProductService],
+  providers: [PrismaService, ProductService, PurchaseService, ProductResolver, PurchaseResolver],
 })
 export class HttpModule {}

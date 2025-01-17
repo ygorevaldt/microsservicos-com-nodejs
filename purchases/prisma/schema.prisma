@@ -34,7 +34,7 @@ model Product {
 
 enum PurchaseStatus {
   pending
-  aproved
+  approved
   failed
 }
 

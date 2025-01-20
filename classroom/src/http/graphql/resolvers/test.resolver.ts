@@ -1,7 +1,7 @@
-import { Get, UseGuards } from "@nestjs/common";
-import { AuthorizationGuard } from "../authorization/authorization.guard";
-import { PrismaService } from "src/database/prisma/prisma.service";
+import { UseGuards } from "@nestjs/common";
 import { Query, Resolver } from "@nestjs/graphql";
+import { AuthorizationGuard } from "src/http/authorization/authorization.guard";
+import { PrismaService } from "src/database/prisma/prisma.service";
 
 @Resolver()
 export class TestResolver {

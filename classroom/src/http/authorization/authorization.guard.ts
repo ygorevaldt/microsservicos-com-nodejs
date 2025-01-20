@@ -1,8 +1,9 @@
 import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from "@nestjs/common";
 import { auth } from "express-oauth2-jwt-bearer";
 import { ConfigService } from "@nestjs/config";
-import { Request, Response } from "express";
 import { GqlExecutionContext } from "@nestjs/graphql";
+import * as jwt from "jsonwebtoken";
+import { Request } from "express";
 
 @Injectable()
 export class AuthorizationGuard implements CanActivate {
@@ -30,9 +31,16 @@ export class AuthorizationGuard implements CanActivate {
         if (error) {
           reject(new UnauthorizedException(error));
         } else {
+          req.user = this.extractPayloadFromToken(req);
           resolve(true);
         }
       });
     });
+  }
+
+  private extractPayloadFromToken(req: Request) {
+    const token = req.headers.authorization.split(" ")[1];
+    const payload = jwt.decode(token);
+    return payload;
   }
 }

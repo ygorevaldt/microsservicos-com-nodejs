@@ -31,6 +31,14 @@ export class PurchaseService {
     return purchases;
   }
 
+  async findManyFromCustomer(customerId: string) {
+    const purchases = await this.prismaService.purchase.findMany({
+      where: { customerId },
+    });
+
+    return purchases;
+  }
+
   async findUnique(id: string) {
     return await this.prismaService.purchase.findUnique({
       where: { id },

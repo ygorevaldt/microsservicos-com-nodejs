@@ -27,9 +27,15 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+type CustomerModel {
+  id: ID!
+  purchases: [PurchaseModel!]!
+}
+
 type Query {
   listProducts: [ProductModel!]!
   listPurchases: [PurchaseModel!]!
+  me: CustomerModel!
 }
 
 type Mutation {

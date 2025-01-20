@@ -12,7 +12,8 @@ import { ProductService } from "src/services/product.service";
 import { PurchaseResolver } from "./graphql/resolvers/purchase.resolver";
 import { PurchaseService } from "src/services/purchase.service";
 import { auth } from "express-oauth2-jwt-bearer";
-import { CustumerService } from "src/services/custumer.service";
+import { CustomerService } from "src/services/customer.service";
+import { CustomerResolver } from "./graphql/resolvers/customer.resolver";
 
 @Module({
   imports: [
@@ -27,9 +28,10 @@ import { CustumerService } from "src/services/custumer.service";
     PrismaService,
     ProductService,
     PurchaseService,
-    CustumerService,
+    CustomerService,
     ProductResolver,
     PurchaseResolver,
+    CustomerResolver,
   ],
 })
 export class HttpModule {}

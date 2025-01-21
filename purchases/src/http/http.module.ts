@@ -14,6 +14,7 @@ import { PurchaseService } from "src/services/purchase.service";
 import { auth } from "express-oauth2-jwt-bearer";
 import { CustomerService } from "src/services/customer.service";
 import { CustomerResolver } from "./graphql/resolvers/customer.resolver";
+import { MessagingModule } from "src/messaging/messaging.module";
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { CustomerResolver } from "./graphql/resolvers/customer.resolver";
       autoSchemaFile: join("src", "database", "schema.gql"),
     }),
     DatabaseModule,
+    MessagingModule,
   ],
   providers: [
     PrismaService,

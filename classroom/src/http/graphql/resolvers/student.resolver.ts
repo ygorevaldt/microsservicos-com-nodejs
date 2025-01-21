@@ -1,4 +1,4 @@
-import { UseGuards } from "@nestjs/common";
+import { NotFoundException, UseGuards } from "@nestjs/common";
 import { Parent, Query, ResolveField, Resolver } from "@nestjs/graphql";
 
 import { StudentModel } from "../models/student.model";
@@ -19,7 +19,12 @@ export class StudentResolver {
   @Query(() => StudentModel)
   @UseGuards(AuthorizationGuard)
   async me(@CurrentUser() user: AuthUser) {
-    return await this.studentService.findUniqueAuthId(user.sub);
+    const student = await this.studentService.findUniqueAuthId(user.sub);
+    if (!student) {
+      throw new NotFoundException("Student is not registred");
+    }
+
+    return student;
   }
 
   @Query(() => [StudentModel])

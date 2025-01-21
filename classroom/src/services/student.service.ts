@@ -1,9 +1,17 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { PrismaService } from "src/database/prisma/prisma.service";
+import { CreateStudentDto } from "./dtos/create-student.dto";
 
 @Injectable()
 export class StudentService {
   constructor(private readonly prismaService: PrismaService) {}
+
+  async create({ authUserId }: CreateStudentDto) {
+    const student = await this.prismaService.student.create({
+      data: { authUserId },
+    });
+    return student;
+  }
 
   async findMany() {
     const students = await this.prismaService.student.findMany({
@@ -19,10 +27,6 @@ export class StudentService {
       where: { id },
     });
 
-    if (!student) {
-      throw new NotFoundException("Student is not registred");
-    }
-
     return student;
   }
 
@@ -30,10 +34,6 @@ export class StudentService {
     const student = await this.prismaService.student.findUnique({
       where: { authUserId: authId },
     });
-
-    if (!student) {
-      throw new NotFoundException("Student is not registred");
-    }
 
     return student;
   }

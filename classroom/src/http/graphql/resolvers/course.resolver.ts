@@ -1,4 +1,4 @@
-import { UnauthorizedException, UseGuards } from "@nestjs/common";
+import { NotFoundException, UnauthorizedException, UseGuards } from "@nestjs/common";
 import { Args, Mutation, Parent, Query, ResolveField, Resolver } from "@nestjs/graphql";
 import { AuthorizationGuard } from "src/http/authorization/authorization.guard";
 import { CourseModel } from "../models/course.model";
@@ -36,6 +36,10 @@ export class CourseResolver {
   @UseGuards(AuthorizationGuard)
   async getCourse(@Args("id") id: string, @CurrentUser() user: AuthUser) {
     const student = await this.studentService.findUniqueAuthId(user.sub);
+    if (!student) {
+      throw new NotFoundException("Student is not registred");
+    }
+
     const enrollments = await this.enrollmentService.findManyByCourseIdAndStudentId(id, student.id);
     if (!enrollments[0]) {
       throw new UnauthorizedException();

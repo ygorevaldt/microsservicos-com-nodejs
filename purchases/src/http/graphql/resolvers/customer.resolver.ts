@@ -1,4 +1,4 @@
-import { UseGuards } from "@nestjs/common";
+import { NotFoundException, UseGuards } from "@nestjs/common";
 import { AuthorizationGuard } from "../../authorization/authorization.guard";
 import { Parent, Query, ResolveField, Resolver } from "@nestjs/graphql";
 import { CustomerModel } from "../models/customer.model";
@@ -16,7 +16,12 @@ export class CustomerResolver {
   @UseGuards(AuthorizationGuard)
   @Query(() => CustomerModel)
   async me(@CurrentUser() user: AuthUser) {
-    return await this.customerService.findUniqueByAuthId(user.sub);
+    const customer = await this.customerService.findUniqueByAuthId(user.sub);
+    if (!customer) {
+      throw new NotFoundException("Customer is not registred");
+    }
+
+    return customer;
   }
 
   @ResolveField()

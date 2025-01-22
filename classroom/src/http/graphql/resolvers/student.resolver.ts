@@ -16,17 +16,6 @@ export class StudentResolver {
     private readonly enrollmentService: EnrollmentService,
   ) {}
 
-  @Query(() => StudentModel)
-  @UseGuards(AuthorizationGuard)
-  async me(@CurrentUser() user: AuthUser) {
-    const student = await this.studentService.findUniqueAuthId(user.sub);
-    if (!student) {
-      throw new NotFoundException("Student is not registred");
-    }
-
-    return student;
-  }
-
   @Query(() => [StudentModel])
   @UseGuards(AuthorizationGuard)
   async listStudents() {

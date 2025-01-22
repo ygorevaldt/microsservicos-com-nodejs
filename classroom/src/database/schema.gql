@@ -2,8 +2,18 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type StudentModel {
-  id: ID!
+directive @key(fields: String!) on OBJECT | INTERFACE
+
+directive @extends on OBJECT | INTERFACE
+
+directive @external on OBJECT | FIELD_DEFINITION
+
+directive @requires(fields: String!) on FIELD_DEFINITION
+
+directive @provides(fields: String!) on FIELD_DEFINITION
+
+type User {
+  authUserId: ID!
   enrollments: [EnrollmentModel!]!
 }
 
@@ -18,7 +28,7 @@ type EnrollmentModel {
   id: ID!
   createdAt: DateTime!
   canceledAt: DateTime!
-  student: StudentModel!
+  student: User!
   course: CourseModel!
 }
 
@@ -31,8 +41,7 @@ type Query {
   listCourses: [CourseModel!]!
   getCourse(id: String!): CourseModel!
   listEnrollments: [EnrollmentModel!]!
-  me: StudentModel!
-  listStudents: [StudentModel!]!
+  listStudents: [User!]!
 }
 
 type Mutation {
